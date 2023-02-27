@@ -1,0 +1,12 @@
+formatter: "markdown"
+
+output:
+  file: README.md
+  mode: inject
+
+sections:
+  show:
+    - providers
+    - modules
+    - inputs
+    - outputs

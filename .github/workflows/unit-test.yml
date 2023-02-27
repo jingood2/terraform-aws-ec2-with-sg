@@ -1,0 +1,38 @@
+name: Unit Test
+
+on:
+  push:
+    branches:
+      - 'feature/*'
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    name: Run Go Unit Test
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.18.3
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          # invalid character 'c' looking for beginning of value" issue when running on GitHub Action #779
+          terraform_wrapper: false
+          terraform_version: 1.3.7
+      #- uses: autero1/action-terraform@v0.1.0
+      #  with:
+      #    terraform_version: 0.12.21
+      - name: Download Go Modules
+        working-directory: test
+        run: go mod init test
+      #  run: go mod init ${localWorkspaceFolderBasename}
+      - name: go mod tidy
+        working-directory: test
+      #  run: go test -v -tags=unit
+        run: go mod tidy
+      - name: Run Go Tests
+        working-directory: test
+        run: go test -v -tags=unit
