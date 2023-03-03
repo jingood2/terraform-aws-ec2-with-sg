@@ -9,25 +9,11 @@ import (
 
 // An example of how to test the simple Terraform module in examples/terraform-basic-example using Terratest.
 func TestTerraformBasicExample(t *testing.T) {
-	t.Parallel()
-
-	expectedText := "test"
-	expectedList := []string{expectedText}
-	expectedMap := map[string]string{"expected": expectedText}
 
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		// website::tag::1::Set the path to the Terraform code that will be tested.
 		// The path to where our Terraform code is located
-		TerraformDir: "../examples/terraform-basic-example",
-
-		// Variables to pass to our Terraform code using -var options
-		Vars: map[string]interface{}{
-			"example": expectedText,
-
-			// We also can see how lists and maps translate between terratest and terraform.
-			"example_list": expectedList,
-			"example_map":  expectedMap,
-		},
+		TerraformDir: "../examples/terraform-ec2-bastion",
 
 		// Variables to pass to our Terraform code using -var-file options
 		VarFiles: []string{"varfile.tfvars"},
@@ -46,14 +32,10 @@ func TestTerraformBasicExample(t *testing.T) {
 
 	// Run `terraform output` to get the values of output variables
 	//actualTextExample := terraform.Output(t, terraformOptions, "example")
-	actualTextExample2 := terraform.Output(t, terraformOptions, "example2")
-	actualExampleList := terraform.OutputList(t, terraformOptions, "example_list")
-	actualExampleMap := terraform.OutputMap(t, terraformOptions, "example_map")
+	output := terraform.Output(t, terraformOptions, "public_bastion_sg_group_vpc_id")
 
 	// website::tag::3::Check the output against expected values.
 	// Verify we're getting back the outputs we expect
 	//assert.Equal(t, expectedText, actualTextExample)
-	assert.Equal(t, expectedText, actualTextExample2)
-	assert.Equal(t, expectedList, actualExampleList)
-	assert.Equal(t, expectedMap, actualExampleMap)
+	assert.Equal(t, "vpc-0cf5263ae1a0c2e03", output)
 }

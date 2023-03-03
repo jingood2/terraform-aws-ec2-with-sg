@@ -1,9 +1,9 @@
-name: Unit Test
+name: Test
 
 on:
   push:
     branches:
-      - 'feature/*'
+      - 'main'
 
 jobs:
   unit-tests:
