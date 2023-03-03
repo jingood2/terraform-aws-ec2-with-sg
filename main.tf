@@ -247,7 +247,7 @@ module "ec2_bastion" {
 #######################################################################
 resource "aws_eip" "bastion_eip" {
   depends_on = [module.ec2_bastion]
-  instance = module.ec2_bastion.id[0]
+  instance = module.ec2_bastion.id
   vpc      = true
   tags = local.common_tags
 
