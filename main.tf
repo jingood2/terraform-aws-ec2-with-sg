@@ -35,7 +35,7 @@ data "aws_security_group" "default" {
 # Security Group for Public Bastion Host
 module "public_bastion_sg" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "3.18.0"
+  version = "4.17.2"
 
   name = "${local.name}-bastion-sg"
   description = "Security Group with SSH port open for everybody (IPv4 CIDR), egress ports are all world open"
@@ -52,7 +52,7 @@ module "public_bastion_sg" {
 # Security Group for Private EC2 Instances
 /* module "private_sg" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "3.18.0"
+  version = "4.17.2"
 
   name = "private-sg"
   description = "Security Group with HTTP & SSH port open for entire VPC Block (IPv4 CIDR), egress ports are all world open"
