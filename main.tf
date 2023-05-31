@@ -175,7 +175,7 @@ data "aws_subnets" "selected" {
 
 module "ec2_bastion" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  version = "4.3.0"
+  version = "5.1.0"
   # insert the 10 required variables here
   name                   = "${var.environment}-bastion"
   # ami                    = data.aws_ami.amzlinux2.id
